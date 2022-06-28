@@ -57,6 +57,25 @@ class Component extends React.Component {
     render() {
         const {logList} = this.state;
 
+        if (logList.length > 0) {
+            return (<div>
+                    <div className='btn-group font-monospace' role='group'>
+                        <button type='button'
+                                className='btn btn-outline-success'
+                                onClick={this.addIncreaseLog}>+
+                        </button>
+                        <button type='button'
+                                className='btn btn-outline-danger'
+                                onClick={this.addDecreaseLog}>-
+                        </button>
+                    </div>
+                    <div className='list-group'>
+                        {logList.map(item => this.renderItem(item))}
+                    </div>
+                </div>
+            )
+        }
+
         return (
             <div>
                 <div className='btn-group font-monospace' role='group'>
@@ -68,9 +87,6 @@ class Component extends React.Component {
                             className='btn btn-outline-danger'
                             onClick={this.addDecreaseLog}>-
                     </button>
-                </div>
-                <div className='list-group'>
-                    {logList.map(item => this.renderItem(item))}
                 </div>
             </div>
         )
