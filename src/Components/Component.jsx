@@ -10,9 +10,9 @@ class Component extends React.Component {
     }
 
     changeLog = (val) => () => {
-        if (val === 'increaseOnOne') {
-            let {logObj, logList} = this.state;
+        let {logObj, logList} = this.state;
 
+        if (val === 'increaseOnOne') {
             this.setState({
                 logObj: {
                     logValue: ++logObj.logValue,
@@ -23,8 +23,6 @@ class Component extends React.Component {
         }
 
         if (val === 'decreaseOnOne') {
-            let {logObj, logList} = this.state;
-
             this.setState({
                 logObj: {
                     logValue: --logObj.logValue,
