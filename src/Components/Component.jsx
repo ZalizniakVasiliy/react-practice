@@ -32,6 +32,7 @@ class Component extends React.Component {
 
     removeLogItem = (oldIndex) => (e) => {
         e.preventDefault();
+
         const {logList} = this.state;
         const newLogList = logList.filter((item, newIndex) => newIndex !== oldIndex);
 
