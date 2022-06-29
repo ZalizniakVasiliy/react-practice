@@ -5,30 +5,24 @@ class Component extends React.Component {
         super(props);
         this.state = {
             logList: [],
-            logObj: {logValue: 0, logId: 0}
+            logValue: 0
         }
     }
 
     changeLog = (val) => () => {
-        let {logObj, logList} = this.state;
+        let {logValue, logList} = this.state;
 
         if (val === 'increaseOnOne') {
             this.setState({
-                logObj: {
-                    logValue: ++logObj.logValue,
-                    logId: ++logObj.logId
-                },
-                logList: [logObj, ...logList]
+                logValue: ++logValue,
+                logList: [logValue, ...logList]
             });
         }
 
         if (val === 'decreaseOnOne') {
             this.setState({
-                logObj: {
-                    logValue: --logObj.logValue,
-                    logId: ++logObj.logId
-                },
-                logList: [logObj, ...logList]
+                logValue: --logValue,
+                logList: [logValue, ...logList]
             });
         }
     }
@@ -36,20 +30,26 @@ class Component extends React.Component {
     addIncreaseLog = this.changeLog('increaseOnOne');
     addDecreaseLog = this.changeLog('decreaseOnOne');
 
-    removeLogItem = (logId) => (e) => {
+    removeLogItem = (oldIndex) => (e) => {
         e.preventDefault();
         const {logList} = this.state;
+        const newLogList = logList.filter((item, newIndex) => newIndex !== oldIndex);
 
-        const newLogList = logList.filter((item) => item.logId !== logId);
-        this.setState({logList: newLogList});
+        let newLogValue;
+        if (newLogList.length > 0) {
+            newLogValue = newLogList[0];
+        } else {
+            newLogValue = 0;
+        }
+        this.setState({logList: newLogList, logValue: newLogValue});
     }
 
-    renderItem = ({logValue, logId}) => {
+    renderItem = (logValue, index) => {
         return (
             <button type='button'
                     className='list-group-item list-group-item-action'
-                    key={logId}
-                    onClick={this.removeLogItem(logId)}>{logValue}
+                    key={index}
+                    onClick={this.removeLogItem(index)}>{logValue}
             </button>
         )
     }
@@ -58,7 +58,8 @@ class Component extends React.Component {
         const {logList} = this.state;
 
         if (logList.length > 0) {
-            return (<div>
+            return (
+                <div>
                     <div className='btn-group font-monospace' role='group'>
                         <button type='button'
                                 className='btn btn-outline-success'
@@ -70,7 +71,7 @@ class Component extends React.Component {
                         </button>
                     </div>
                     <div className='list-group'>
-                        {logList.map(item => this.renderItem(item))}
+                        {logList.map((item, index) => this.renderItem(item, index))}
                     </div>
                 </div>
             )
@@ -94,3 +95,4 @@ class Component extends React.Component {
 }
 
 export default Component;
+
