@@ -19,7 +19,7 @@ const PostCatalog = () => {
     const renderListPosts = () => {
         return (
             listPosts.map((item, index) => {
-                return <SinglePost key={index} listPosts={item}/>
+                return <SinglePost key={index} singlePost={item}/>
             }))
     };
 
